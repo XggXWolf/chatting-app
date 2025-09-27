@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io("http://192.168.1.104:3000");
 
 const editProfilePic = document.getElementById("edit-button");
 const usernameInput = document.getElementById("username");
@@ -200,3 +200,13 @@ if (savedProfilePic) {
     profilePic = savedProfilePic;
     socket.emit("changeProfilePic", savedProfilePic)
 }
+
+const setAppHeight = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`)
+};
+
+setAppHeight();
+
+window.addEventListener('resize', setAppHeight);
+window.addEventListener('orientationchange', setAppHeight);

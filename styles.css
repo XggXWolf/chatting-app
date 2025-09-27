@@ -9,6 +9,9 @@
   --border-shadow: rgba(0,0,0,0.5);
   --error-color: #FF4C4C;
   --button-color: #298FF4;
+
+  --app-height: 100vh;
+
 }
 
 .login-text{
@@ -113,14 +116,15 @@
 .page-content{
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  height: var(--app-height);
   top:0;
   left:0;
 }
 
 body{
   margin: 0;
-  height: 100vh;
+  height: var(--app-height);
+  min-height: var(--app-height);
   background-image: url('https://getwallpapers.com/wallpaper/full/0/9/8/1031247-no-game-no-life-wallpapers-1920x1080-samsung-galaxy.jpg');
   background-position: center center;
   background-repeat: no-repeat;
@@ -129,6 +133,7 @@ body{
 }
 html{
   height: 100%;
+  
 }
 
 .chat-container{
@@ -155,6 +160,7 @@ html{
   flex-direction: column;
   gap: 10px;
   flex: 1;
+  padding-bottom: calc(60px + env(safe-area-inset-bottom)); 
 }
 
 .message{
@@ -193,10 +199,11 @@ html{
 }
 
 .input-box{
+  position: fixed;
+  bottom: env(safe-area-inset-bottom);
   height: 5%;
   width: 100%;
   display: flex;
-  bottom: env(safe-area-inset-bottom);
   align-items: center;
   gap: 10px;
   background-color: var(--card-bg);
