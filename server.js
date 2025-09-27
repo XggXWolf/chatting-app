@@ -71,8 +71,11 @@ io.on("connection", (socket) => {
     socket.emit("welcome", "Welcome to the chat app!");
 });
 
-httpServer.listen(3000, "0.0.0.0", () => {
-    console.log("Server is running on port 3000");
+
+const PORT = process.env.PORT || 3000;
+
+httpServer.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
 
