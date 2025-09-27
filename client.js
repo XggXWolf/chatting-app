@@ -1,4 +1,4 @@
-const socket = io("http://192.168.1.104:3000");
+const socket = io();
 
 const editProfilePic = document.getElementById("edit-button");
 const usernameInput = document.getElementById("username");
@@ -181,7 +181,7 @@ function postImage(image) {
 
     imageContainer.appendChild(profilePic);
     imageContainer.appendChild(imageElement);
-    
+
     document.querySelector(".messages").appendChild(imageContainer);
 }
 
