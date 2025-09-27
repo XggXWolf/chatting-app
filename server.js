@@ -1,12 +1,25 @@
+import express from "express";
 import { Server } from "socket.io";
 import  http from "http";
+import path from "path";
+import { fileURLToPath } from "url";
 
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
 const httpServer = http.createServer();
 const io = new Server(httpServer, {
     cors: {
         origin: "*",
     }
+});
+
+app.use(express.static(__dirname));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 
