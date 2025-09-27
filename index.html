@@ -20,7 +20,7 @@
                     <!-- Messages will be appended here -->
                 </div>
                 <div class="input-box">
-                    <img src="images/blank-profile-picture-973460_960_720.webp" alt="user-profile" class="profile-pic-small">
+                    <img src="images/blank-profile-picture-973460_960_720.webp" alt="user-profile" class="profile-pic-small" id = "profilePicSmall">
                     <input type="text" class="message-input" placeholder="Type a message..." id="messageInput">
                     <button class="send-btn" id="send-button">Send</button>
                 </div>
@@ -28,17 +28,19 @@
         </div>
     </div>
 
-    <div class="join-overlay">
+    <div class="join-overlay" id = "joinOverlay">
         <div class="join-popup">    
             <h3 class="login-text">Log in</h3>
 
             <div class="profile-pic-container">
                 <img src="images/blank-profile-picture-973460_960_720.webp" alt="user-profile" class="profile-pic">
-                <button class="edit-btn">✎</button>
+                <button class="edit-btn" id = "edit-button">✎</button>
             </div>
 
-            <input type="text" class="username" placeholder="Enter your username">
-            <button class="join-btn">Join</button>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+
+            <input type="text" class="username" id = "username" placeholder="Enter your username">
+            <button class="join-btn" id = "join-button">Join</button>
         </div>
     </div>
 

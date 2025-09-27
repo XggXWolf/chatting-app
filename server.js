@@ -1,6 +1,5 @@
 import { Server } from "socket.io";
 import  http from "http";
-import { profile } from "console";
 
 
 const httpServer = http.createServer();
@@ -25,7 +24,6 @@ io.on("connection", (socket) => {
     };
 
     socket.on("changeUsername", (newUsername) => {
-        if(!isBase64Image(newUsername)) return;
         if (newUsername && newUsername.trim() !== "") {
             users[socket.id].username = newUsername.trim().substring(0, 20);
             console.log(`User ${socket.id} changed username to ${newUsername}`);
@@ -33,6 +31,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("changeProfilePic", (newProfilePic) => {
+        if(!isBase64Image(newProfilePic)) return;
         if (newProfilePic && newProfilePic.trim() !== "") {
             users[socket.id].profilePic = newProfilePic.trim();
             console.log(`User ${socket.id} changed profile picture to ${newProfilePic}`);
