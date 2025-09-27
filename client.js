@@ -1,23 +1,23 @@
-const socket = io("http://192.168.1.103:3000");
+const socket = io("http://192.168.1.104:3000");
 
 const editProfilePic = document.getElementById("edit-button");
 const usernameInput = document.getElementById("username");
 const joinButton = document.getElementById("join-button");
-const fileInput = document.getElementById('fileInput');
+const profilePicInput = document.getElementById('profilePicInput');
 const joinOverlay = document.getElementById('joinOverlay')
 const smallProfilePic = document.getElementById('profilePicSmall')
 
 let profilePic = "";
 
 editProfilePic.addEventListener("click", () => {
-    fileInput.click();
+    profilePicInput.click();
 });
 
 smallProfilePic.addEventListener("click", () => {
     joinOverlay.style.display = "flex";
 });
 
-fileInput.addEventListener('change', (event) => {
+profilePicInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
@@ -68,6 +68,66 @@ messageSend.addEventListener("click", (event) => {
     messageInput.value = "";
 });
 
+messageInput.addEventListener("keydown", (event) => {
+    if(event.key == 'Enter'){
+        event.preventDefault();
+        const message = messageInput.value;
+        socket.emit("sendMessage", message);
+        messageInput.value = '';
+    }
+});
+
+const imageSend = document.getElementById("addImgButton");
+const imageInput = document.getElementById("imageInput")
+
+imageSend.addEventListener("click", () =>{
+    imageInput.click();
+});
+
+imageInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const img = new Image();
+
+            img.onload = () => {
+                
+                const maxImgSize = 512;
+                let finalWidth = maxImgSize;
+                let finalHeight = maxImgSize;
+
+
+
+                if(img.width > maxImgSize || img.height > maxImgSize){
+                    const aspectRatio = img.width / img.height;
+
+                    finalWidth = img.width > img.height ? maxImgSize : maxImgSize * aspectRatio;
+                    finalHeight = img.height > img.width ? maxImgSize : maxImgSize / aspectRatio;
+                } else {
+                    finalWidth = img.width;
+                    finalHeight = img.height;
+                }
+
+                const canvas = document.createElement('canvas');
+                canvas.width = finalWidth;
+                canvas.height = finalHeight;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, finalWidth, finalHeight);
+
+                const resizedBase64 = canvas.toDataURL('image/png');
+
+                socket.emit("sendImage", resizedBase64);
+
+            }
+            img.src = e.target.result;
+        }
+
+        reader.readAsDataURL(file);
+    }
+});
 
 socket.on("welcome", (message) => {
     console.log(message);
@@ -119,7 +179,9 @@ function postImage(image) {
     imageElement.alt = "Image Message";
     imageElement.classList.add("message-image");
 
+    imageContainer.appendChild(profilePic);
     imageContainer.appendChild(imageElement);
+    
     document.querySelector(".messages").appendChild(imageContainer);
 }
 
@@ -128,10 +190,13 @@ const savedUsername = localStorage.getItem("username");
 
 if (savedUsername) {
     socket.emit("changeUsername", savedUsername);
+    usernameInput.value = savedUsername;
 } else {
     joinOverlay.style.display = "flex";
 }
 if (savedProfilePic) {
     smallProfilePic.src = savedProfilePic;
+    document.querySelector(".profile-pic").src = savedProfilePic;
+    profilePic = savedProfilePic;
     socket.emit("changeProfilePic", savedProfilePic)
 }

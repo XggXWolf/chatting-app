@@ -119,11 +119,16 @@
 }
 
 body{
+  margin: 0;
+  height: 100vh;
   background-image: url('https://getwallpapers.com/wallpaper/full/0/9/8/1031247-no-game-no-life-wallpapers-1920x1080-samsung-galaxy.jpg');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+}
+html{
+  height: 100%;
 }
 
 .chat-container{
@@ -150,7 +155,6 @@ body{
   flex-direction: column;
   gap: 10px;
   flex: 1;
-  padding-bottom: 80px;
 }
 
 .message{
@@ -182,11 +186,13 @@ body{
   font: 16px 'Arial', sans-serif;
   color: white;
   margin: 0; 
-  align-self: center
+  align-self: center;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .input-box{
-  position: fixed;
   height: 5%;
   width: 100%;
   display: flex;
@@ -212,9 +218,21 @@ body{
   color: var(--text-color);
 }
 
+.add-img{
+  aspect-ratio: 1/1;
+  width: 40px; 
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--panel-bg);
+  text-align: center;
+  color: var(--text-color);
+  font: 32px 'Arial', sans-serif, bolder;
+  align-content: center;
+  cursor: pointer;
+}
+
 .send-btn{
   min-width: 60px;
-  width: 3.5%;
   height: 80%;
   border-radius: 5px;
   border: none;
@@ -222,7 +240,7 @@ body{
   color: var(--text-color);
   font-weight: bold;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 .profile-pic-small {
