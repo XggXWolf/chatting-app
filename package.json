@@ -1,0 +1,27 @@
+{
+  "name": "chattingapp",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XggXWolf/chatting-app.git"
+  },
+  "author": "Mert Çetin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/XggXWolf/chatting-app/issues"
+  },
+  "homepage": "https://github.com/XggXWolf/chatting-app#readme",
+  "description": "",
+  "dependencies": {
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
