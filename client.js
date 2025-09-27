@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io("http://192.168.1.104:3000");
 
 const editProfilePic = document.getElementById("edit-button");
 const usernameInput = document.getElementById("username");
@@ -8,6 +8,17 @@ const joinOverlay = document.getElementById('joinOverlay')
 const smallProfilePic = document.getElementById('profilePicSmall')
 
 let profilePic = "";
+
+
+const request = indexedDB.open("ChatAppDB", 1);
+
+request.onupgradeneeded = (event) => {
+    const db = event.target.result;
+
+    db.createObjectResult("users", {keypath: "id"})
+};
+
+
 
 editProfilePic.addEventListener("click", () => {
     profilePicInput.click();
@@ -60,6 +71,7 @@ joinButton.addEventListener('click', (event) => {
 
 const messageSend = document.getElementById("send-button");
 const messageInput = document.getElementById("messageInput");
+const messages = document.getElementById("messagesContainer")
 
 messageSend.addEventListener("click", (event) => {
     event.preventDefault();
@@ -134,13 +146,33 @@ socket.on("welcome", (message) => {
 });
 
 socket.on("newMessage", (chatMessage) => {
+
+    const threshold = 20; // pixels
+
+    const isAtBottom = messages.scrollHeight - messages.scrollTop - messages.clientHeight <= threshold;
+
     console.log("New chat message received:", chatMessage);
     postMessage({ username: chatMessage.username, text: chatMessage.message, profilePic: chatMessage.profilePic });
+
+    if (isAtBottom) {
+        messages.scrollTop = messages.scrollHeight;
+    }
 });
 
 socket.on("newImage", (imageMessage) => {
+
+    const threshold = 20; // pixels
+
+    const isAtBottom = messages.scrollHeight - messages.scrollTop - messages.clientHeight <= threshold;
+
     console.log("New image message received:", imageMessage);
     postImage({ src: imageMessage.image, profilePic: imageMessage.profilePic });
+
+
+
+    if (isAtBottom) {
+        messages.scrollTop = messages.scrollHeight;
+    }
 });
 
 function postMessage(message) {
