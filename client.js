@@ -10,16 +10,6 @@ const smallProfilePic = document.getElementById('profilePicSmall')
 let profilePic = "";
 
 
-const request = indexedDB.open("ChatAppDB", 1);
-
-request.onupgradeneeded = (event) => {
-    const db = event.target.result;
-
-    db.createObjectResult("users", {keypath: "id"})
-};
-
-
-
 editProfilePic.addEventListener("click", () => {
     profilePicInput.click();
 });
@@ -81,7 +71,7 @@ messageSend.addEventListener("click", (event) => {
 });
 
 messageInput.addEventListener("keydown", (event) => {
-    if(event.key == 'Enter'){
+    if (event.key == 'Enter') {
         event.preventDefault();
         const message = messageInput.value;
         socket.emit("sendMessage", message);
@@ -92,7 +82,7 @@ messageInput.addEventListener("keydown", (event) => {
 const imageSend = document.getElementById("addImgButton");
 const imageInput = document.getElementById("imageInput")
 
-imageSend.addEventListener("click", () =>{
+imageSend.addEventListener("click", () => {
     imageInput.click();
 });
 
@@ -105,14 +95,14 @@ imageInput.addEventListener('change', (event) => {
             const img = new Image();
 
             img.onload = () => {
-                
+
                 const maxImgSize = 512;
                 let finalWidth = maxImgSize;
                 let finalHeight = maxImgSize;
 
 
 
-                if(img.width > maxImgSize || img.height > maxImgSize){
+                if (img.width > maxImgSize || img.height > maxImgSize) {
                     const aspectRatio = img.width / img.height;
 
                     finalWidth = img.width > img.height ? maxImgSize : maxImgSize * aspectRatio;
@@ -139,6 +129,7 @@ imageInput.addEventListener('change', (event) => {
 
         reader.readAsDataURL(file);
     }
+    imageInput.value = "";
 });
 
 socket.on("welcome", (message) => {
@@ -197,24 +188,27 @@ function postMessage(message) {
 }
 
 function postImage(image) {
-    const imageContainer = document.createElement("div");
-    imageContainer.classList.add("message");
+    resizeBase64Img(image.src, window.innerWidth * 0.8, 500, (resizedSrc) => {
+        const imageContainer = document.createElement("div");
+        imageContainer.classList.add("message");
 
-    const profilePic = document.createElement("img");
-    profilePic.src = image.profilePic;
-    profilePic.alt = "Profile Picture";
-    profilePic.classList.add("profile-pic-small");
+        const profilePic = document.createElement("img");
+        profilePic.src = image.profilePic;
+        profilePic.alt = "Profile Picture";
+        profilePic.classList.add("profile-pic-small");
 
 
-    const imageElement = document.createElement("img");
-    imageElement.src = image.src;
-    imageElement.alt = "Image Message";
-    imageElement.classList.add("message-image");
+        const imageElement = document.createElement("img");
+        imageElement.src = resizedSrc;
+        imageElement.alt = "Image Message";
+        imageElement.classList.add("message-image");
 
-    imageContainer.appendChild(profilePic);
-    imageContainer.appendChild(imageElement);
+        imageContainer.appendChild(profilePic);
+        imageContainer.appendChild(imageElement);
 
-    document.querySelector(".messages").appendChild(imageContainer);
+        document.querySelector(".messages").appendChild(imageContainer);
+    });
+
 }
 
 const savedProfilePic = localStorage.getItem("profilePic");
@@ -232,6 +226,32 @@ if (savedProfilePic) {
     profilePic = savedProfilePic;
     socket.emit("changeProfilePic", savedProfilePic)
 }
+
+function resizeBase64Img(base64, maxWidth, maxHeight, callback) {
+    const img = new Image();
+
+    img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        const ratio = Math.min(maxWidth / width, maxHeight / height, 1);
+        width = width * ratio;
+        height = height * ratio;
+
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const resizedBase64 = canvas.toDataURL("image/png");
+        callback(resizedBase64);
+    };
+    img.src = base64;
+}
+
 
 const setAppHeight = () => {
     const vh = window.innerHeight * 0.01;
