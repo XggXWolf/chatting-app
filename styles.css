@@ -1,0 +1,248 @@
+:root {
+  --bg-color: #1E1F2A;
+  --panel-bg: #2E3242;
+  --card-bg: #3A3F5C;
+  --primary-color: #298FF4;
+  --secondary-color: #1C238B;
+  --text-color: #E5E5E5;
+  --text-secondary: #A0A0A0;
+  --border-shadow: rgba(0,0,0,0.5);
+  --error-color: #FF4C4C;
+  --button-color: #298FF4;
+}
+
+.login-text{
+  display: none;
+  margin: 0;
+  color: var(--text-color);
+  font: bold 20px 'Arial', sans-serif;
+}
+
+.profile-pic-container {
+  position: relative;
+  display: inline-block; 
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; 
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.edit-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px; 
+  background: #298FF4;
+  border: none;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.username{
+  background-color: rgba(0,0,0,0.1);
+  border: none;
+  height: 25px;
+  width: 90%;
+  border-radius: 5px;
+  padding-left: 5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  color: var(--text-color);
+}
+
+.join-btn{
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: var(--text-color);
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.join-popup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  border-radius: 0.75rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: var(--panel-bg);
+
+}
+
+.join-popup::before{
+  content : '';
+  position: absolute;
+  top: -4px; bottom: -4px; left: -4px; right: -4px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, #1C238B, #298FF4, #8094B7);
+  z-index: -1;
+
+}
+
+.join-overlay{
+  z-index: 1000;
+  position:fixed;
+  width: 100vw;
+  height: 100vh;
+  top:0;
+  left:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(0px);
+  background-color: rgba(0,0,0,0.5);
+  display: none;
+}
+
+.page-content{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top:0;
+  left:0;
+}
+
+body{
+  background-image: url('https://getwallpapers.com/wallpaper/full/0/9/8/1031247-no-game-no-life-wallpapers-1920x1080-samsung-galaxy.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.chat-container{
+  width: 100%;
+  height: 100%;
+}
+
+.chat-box{
+  background-color: var(--panel-bg);
+  height: 100%;
+  width: 100%;
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages{
+  background-color: var(--card-bg);
+  height: 95%;
+  display: flex;
+  margin: 5px;
+  border-radius: 12px;
+  overflow-y: auto;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message{
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin: 5px;
+}
+
+.img-message{
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  margin: 5px;
+}
+
+.message-image{
+  max-width: 500px;
+  max-height: 500px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  align-self: center;
+  margin: 0;
+  height: auto;
+  object-fit: cover;
+}
+
+.context{
+  font: 16px 'Arial', sans-serif;
+  color: white;
+  margin: 0; 
+  align-self: center
+}
+
+.input-box{
+  height: 5%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--card-bg);
+  padding: 5px;
+  margin: 5px;
+  border-radius: 12px;
+}
+
+.message-input{
+  width: 95%;
+  height: 80%;
+  border-radius: 5px;
+  border: none;
+  padding-left: 10px;
+  font-size: 16px;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0.219);
+  color: var(--text-color);
+}
+
+.send-btn{
+  min-width: 60px;
+  width: 3.5%;
+  height: 80%;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--button-color);
+  color: var(--text-color);
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.profile-pic-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; 
+  margin: 5px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #515874;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background:  #4f5170;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #41435c;;;
+}
