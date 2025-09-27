@@ -149,6 +149,8 @@ body{
   overflow-y: auto;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
+  padding-bottom: 80px;
 }
 
 .message{
@@ -184,14 +186,18 @@ body{
 }
 
 .input-box{
+  position: fixed;
   height: 5%;
+  width: 100%;
   display: flex;
+  bottom: env(safe-area-inset-bottom);
   align-items: center;
   gap: 10px;
   background-color: var(--card-bg);
   padding: 5px;
   margin: 5px;
   border-radius: 12px;
+  z-index: 100;
 }
 
 .message-input{

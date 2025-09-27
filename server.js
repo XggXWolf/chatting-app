@@ -38,6 +38,37 @@ io.on("connection", (socket) => {
             console.log(`User ${socket.id} changed profile picture to ${newProfilePic}`);
         }   
     });
+
+    socket.on("sendMessage", (message) => {
+        if (message && message.trim() !== "") {
+            const user = users[socket.id];
+            const chatMessage = {
+                socketid : socket.id,
+                username: user.username,
+                profilePic: user.profilePic,
+                message: message.trim()
+            };
+            console.log("New chat message:", chatMessage);
+
+            io.emit("newMessage", chatMessage);
+        }
+    });
+
+    socket.on("sendImage", (imageData) => {
+        if (imageData && imageData.trim() !== "" && isBase64Image(imageData)) {
+            const user = users[socket.id];
+            const imageMessage = { 
+                socketid: socket.id,
+                username: user.username,
+                profilePic: user.profilePic,
+                image: imageData.trim()
+            };
+            console.log("New image message:", imageMessage);
+
+            io.emit("newImage", imageMessage);
+        }
+    });
+
     socket.emit("welcome", "Welcome to the chat app!");
 });
 
